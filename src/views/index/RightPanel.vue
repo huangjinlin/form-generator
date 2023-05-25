@@ -586,6 +586,35 @@
               </el-button>
             </div>
           </template>
+          <!-- 增加ts-text操作 -->
+          <template v-if="activeData.__config__.tag === 'ts-text'">
+            <el-form-item label="文本内容">
+              <el-input v-model="activeData.__slot__.span" type="textarea" placeholder="请输入文本内容" />
+            </el-form-item>
+            <el-form-item label="行高">
+              <el-input v-model="activeData.style.lineHeight" placeholder="请输入行高" />
+            </el-form-item>
+            <el-form-item label="字体大小">
+              <el-input v-model="activeData.style.fontSize" placeholder="请输入字体大小" />
+            </el-form-item>
+            <el-form-item label="对齐方式">
+              <el-radio-group v-model="activeData.style.textAlign">
+                <el-radio-button label="left">
+                  左对齐
+                </el-radio-button>
+                <el-radio-button label="center">
+                  居中对齐
+                </el-radio-button>
+                <el-radio-button label="right">
+                  右对齐
+                </el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="字体颜色">
+              <el-input v-model="activeData.style.color" style="width: 120px;float: left" />
+              <el-color-picker v-model="activeData.style.color" style="float: left" />
+            </el-form-item>
+          </template>
         </el-form>
         <!-- 表单属性 -->
         <el-form v-show="currentTab === 'form'" size="small" label-width="90px">
