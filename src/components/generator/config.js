@@ -146,6 +146,44 @@ export const inputComponents = [
     placeholder: '请输入',
     height: 300, // 编辑器高度
     branding: false // 隐藏右下角品牌烙印
+  },
+  {
+    // ---------------------------------------------------------------------------------------------------------
+    __config__: {
+      label: '文本',
+      width: '200px',
+      prop: '',
+      align: '',
+      labelWidth: null,
+      labelHeight: null,
+      showLabel: false,
+      changeTag: true,
+      tag: 'ts-text',
+      tagIcon: 'text',
+      defaultValue: undefined,
+      style: {
+        fonWeight: 'bold'
+      },
+      required: false,
+      layout: 'colFormItem',
+      span: 24,
+      document: 'https://element.eleme.cn/#/zh-CN/component/input',
+      // 正则校验规则
+      regList: []
+    },
+    // 组件的插槽属性
+    __slot__: {
+      span: '文本'
+    },
+    // 其余的为可直接写在组件标签上的属性
+    style: { width: '100%' },
+    clearable: true,
+    'prefix-icon': '',
+    'suffix-icon': '',
+    maxlength: null,
+    'show-word-limit': false,
+    readonly: false,
+    disabled: false
   }
 ]
 
