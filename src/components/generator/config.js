@@ -663,5 +663,29 @@ export const layoutComponents = [
     type: 'default',
     justify: 'start',
     align: 'top'
+  },
+  {
+    __config__: {
+      label: '图片',
+      labelWidth: null,
+      labelHeight: null,
+      showLabel: false,
+      changeTag: true,
+      tag: 'el-image',
+      tagIcon: 'image',
+      required: false,
+      span: 24,
+      layout: 'colFormItem'
+    },
+    style: { width: '100px', height: '100px' },
+    'preview-src-list': [
+      'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg',
+      'https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg',
+      'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg'
+    ], // 开启图片预览功能
+    src: 'https://fuss10.elemecdn.com/9/bb/e27858e973f5d7d3904835f46abbdjpeg.jpeg', // 图片源，同原生
+    fit: 'fill', // 确定图片如何适应容器框，同原生 object-fit
+    placeholder: '图片加载中……', // 图片未加载的占位内容
+    error: '图片记载失败' // 加载失败的内容
   }
 ]

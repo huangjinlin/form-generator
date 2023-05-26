@@ -26,6 +26,36 @@ export default {
         fields: [
           {
             __config__: {
+              label: '图片',
+              labelWidth: null,
+              labelHeight: null,
+              showLabel: false,
+              changeTag: true,
+              tag: 'el-image',
+              tagIcon: 'image',
+              required: false,
+              span: 24,
+              layout: 'colFormItem',
+              formId: 101,
+              renderKey: '1011678241229605'
+            },
+            style: {
+              width: '100px',
+              height: '100px'
+            },
+            'preview-src-list': [
+              'https://images.pexels.com/photos/7615255/pexels-photo-7615255.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+              'https://images.pexels.com/photos/12294406/pexels-photo-12294406.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+              'https://images.pexels.com/photos/14540599/pexels-photo-14540599.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+            ],
+            src: 'https://images.pexels.com/photos/7615255/pexels-photo-7615255.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+            fit: 'fill',
+            placeholder: '图片加载中……图片',
+            error: '图片记载失败',
+            __vModel__: 'field101'
+          },
+          {
+            __config__: {
               label: '单行文本',
               labelWidth: null,
               showLabel: true,

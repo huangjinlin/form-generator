@@ -143,8 +143,13 @@ function mixinMethod(type) {
 function buildData(scheme, dataList) {
   const config = scheme.__config__
   if (scheme.__vModel__ === undefined) return
-  const defaultValue = JSON.stringify(config.defaultValue)
-  dataList.push(`${scheme.__vModel__}: ${defaultValue},`)
+  if (scheme.__config__.tag === 'el-image') {
+    const defaultValue = scheme['preview-src-list']
+    dataList.push(`${scheme.__vModel__}: ${JSON.stringify(defaultValue)},`)
+  } else {
+    const defaultValue = JSON.stringify(config.defaultValue)
+    dataList.push(`${scheme.__vModel__}: ${defaultValue},`)
+  }
 }
 
 // 构建校验规则

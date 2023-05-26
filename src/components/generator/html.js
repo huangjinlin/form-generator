@@ -305,6 +305,20 @@ const tags = {
       styles += `${key}:${style[key]};`
     }
     return `<div ${clearable} style="${styles}" ${placeholder}><span>${text}</span></div>`
+  },
+  'el-image': el => {
+    const {
+      src, fit, style
+    } = el
+    // 因为这里样式并不是很复杂，就不单独写在css.js里面了
+    let styles = ''
+    const { tag } = attrBuilder(el)
+    // eslint-disable-next-line guard-for-in,no-restricted-syntax
+    for (const key in style) {
+      styles += `${key}:${style[key]};`
+    }
+    const previewSrcList = `:preview-src-list="${confGlobal.formModel}.${el.__vModel__}"`
+    return `<${tag} style=${styles} src="${src}" ${previewSrcList} fit="${fit}"></${tag}>`
   }
 }
 

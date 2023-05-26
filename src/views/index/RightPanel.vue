@@ -91,6 +91,34 @@
               @input="onDefaultValueInput"
             />
           </el-form-item>
+          <!-- 增加el-image操作 -->
+          <template v-if="activeData.__config__.tag==='el-image'">
+            <el-form-item label="图片源">
+              <el-input
+                v-model="activeData.src"
+                placeholder="请输入图片源"
+              />
+            </el-form-item>
+            <el-form-item label="图片如何适应容器">
+              <el-radio-group v-model="activeData.fit">
+                <el-radio-button label="fill">
+                  fill
+                </el-radio-button>
+                <el-radio-button label="contain">
+                  contain
+                </el-radio-button>
+                <el-radio-button label="cover">
+                  cover
+                </el-radio-button>
+                <el-radio-button label="none">
+                  none
+                </el-radio-button>
+                <el-radio-button label="scale-down">
+                  scale-down
+                </el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+          </template>
           <el-form-item v-if="activeData.__config__.tag==='el-checkbox-group'" label="至少应选">
             <el-input-number
               :value="activeData.min"
