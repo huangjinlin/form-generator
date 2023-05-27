@@ -319,6 +319,13 @@ const tags = {
     }
     const previewSrcList = `:preview-src-list="${confGlobal.formModel}.${el.__vModel__}"`
     return `<${tag} style=${styles} src="${src}" ${previewSrcList} fit="${fit}"></${tag}>`
+  },
+  'ts-iframe': el => {
+    const { tag } = attrBuilder(el)
+    const src = `src="${el.src}"`
+    const width = `width="${el.width}"`
+    const height = `height="${el.height}"`
+    return `<${tag} ${src} ${width} ${height} />`
   }
 }
 

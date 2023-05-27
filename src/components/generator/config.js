@@ -687,6 +687,23 @@ export const layoutComponents = [
     fit: 'fill', // 确定图片如何适应容器框，同原生 object-fit
     placeholder: '图片加载中……', // 图片未加载的占位内容
     error: '图片记载失败' // 加载失败的内容
+  },
+  {
+    __config__: {
+      layout: 'colFormItem',
+      tagIcon: 'table',
+      tag: 'ts-iframe',
+      span: 24,
+      formId: 222,
+      componentName: 'row222',
+      showLabel: false,
+      changeTag: true,
+      labelWidth: null,
+      label: 'iframe'
+    },
+    src: 'https://www.w3school.com.cn/tags/tag_iframe.asp',
+    width: '100%',
+    height: 200
   }
 ]
 
