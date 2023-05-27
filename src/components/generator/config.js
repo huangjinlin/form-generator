@@ -689,3 +689,46 @@ export const layoutComponents = [
     error: '图片记载失败' // 加载失败的内容
   }
 ]
+
+// 图表组件 【左面板】
+export const EChartsComponents = [
+  {
+    __config__: {
+      label: '折线图',
+      showLabel: false,
+      changeTag: true,
+      tag: 'ts-line-chart',
+      tagIcon: 'input',
+      defaultValue: undefined,
+      layout: 'colFormItem',
+      span: 24
+    },
+    name: '*****占比',
+    seriesData: [
+      {
+        name: 'java',
+        value: 30
+      },
+      {
+        name: 'JavaScript',
+        value: 50
+      },
+      {
+        name: 'php',
+        value: 20
+      }
+    ],
+    title: {
+      text: '啦啦啦啦',
+      subtext: 'ts-designer公司',
+      left: 'center'
+    },
+    extraOption: {
+      color: ['#fe883a', '#2d90d1', '#f75981', '#90e2a9']
+    },
+    style: {
+      width: '90vh',
+      height: '90vh'
+    }
+  }
+]
