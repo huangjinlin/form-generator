@@ -8571,7 +8571,7 @@
   "resolved" "https://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@^2 || ^3.0.0-0", "vue@^2.6.11":
+"vue@^2 || ^3.0.0-0", "vue@^2.0.0", "vue@^2.6.11":
   "integrity" "sha1-dllNh31LEiNEBuhONSdcbVFBJcU="
   "resolved" "https://registry.npm.taobao.org/vue/download/vue-2.6.11.tgz?cache=0&sync_timestamp=1595985151779&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue%2Fdownload%2Fvue-2.6.11.tgz"
   "version" "2.6.11"
@@ -8582,6 +8582,11 @@
   "version" "2.24.0"
   dependencies:
     "sortablejs" "^1.10.1"
+
+"vuex@^3.6.2":
+  "integrity" "sha512-ETW44IqCgBpVomy520DT5jf8n0zoCac+sxWnn+hMe/CzaSejb/eVw2YToiXYX+Ex/AuHHia28vWTq4goAexFbw=="
+  "resolved" "https://registry.npmmirror.com/vuex/-/vuex-3.6.2.tgz"
+  "version" "3.6.2"
 
 "watchpack@^1.7.4":
   "integrity" "sha1-bp2lOzyAuy1lCBiPWyAEEIZs0ws="
