@@ -26,6 +26,97 @@ export default {
         fields: [
           {
             __config__: {
+              layout: 'colFormItem',
+              tagIcon: 'table',
+              tag: 'el-table',
+              document: 'https://element.eleme.cn/#/zh-CN/component/table',
+              span: 24,
+              formId: 101,
+              renderKey: '1011678428254500',
+              componentName: 'row101',
+              showLabel: false,
+              changeTag: true,
+              labelWidth: null,
+              label: '表格',
+              dataType: 'dynamic',
+              method: 'get',
+              dataPath: 'list',
+              dataConsumer: 'data',
+              url: 'https://www.fastmock.site/mock/f8d7a54fb1e60561e2f720d5a810009d/fg/tableData',
+              children: [{
+                __config__: {
+                  layout: 'raw',
+                  tag: 'el-table-column',
+                  renderKey: '1021678428254500',
+                  formId: 102
+                },
+                prop: 'date',
+                label: '日期'
+              }, {
+                __config__: {
+                  layout: 'raw',
+                  tag: 'el-table-column',
+                  renderKey: '1031678428254500',
+                  formId: 103
+                },
+                prop: 'address',
+                label: '地址'
+              }, {
+                __config__: {
+                  layout: 'raw',
+                  tag: 'el-table-column',
+                  renderKey: '1041678428254500',
+                  formId: 104
+                },
+                prop: 'name',
+                label: '名称'
+              }, {
+                __config__: {
+                  layout: 'raw',
+                  tag: 'el-table-column',
+                  renderKey: '1051678428254500',
+                  children: [{
+                    __config__: {
+                      label: '按钮',
+                      tag: 'el-button',
+                      tagIcon: 'button',
+                      layout: 'raw',
+                      renderKey: '1061678428254500',
+                      formId: 106
+                    },
+                    __slot__: {
+                      default: '主要按钮'
+                    },
+                    type: 'primary',
+                    icon: 'el-icon-search',
+                    round: false,
+                    size: 'medium'
+                  }],
+                  formId: 105
+                },
+                label: '操作'
+              }]
+            },
+            data: [{
+              date: '2020-09-09',
+              name: 'JakHuang',
+              address: '上海市普陀区金沙江路 2020 弄'
+            }],
+            directives: [{
+              name: 'loading',
+              value: false
+            }],
+            border: true,
+            stripe: true,
+            'show-header': true,
+            size: 'medium',
+            type: 'default',
+            justify: 'start',
+            align: 'top',
+            __vModel__: 'tsabcd'
+          },
+          {
+            __config__: {
               label: '下拉选择',
               showLabel: true,
               labelWidth: null,

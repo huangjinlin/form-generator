@@ -710,6 +710,89 @@ export const layoutComponents = [
     src: 'https://www.w3school.com.cn/tags/tag_iframe.asp',
     width: '100%',
     height: 200
+  },
+  {
+    __config__: {
+      layout: 'colFormItem',
+      tagIcon: 'table',
+      tag: 'el-table',
+      document: 'https://element.eleme.cn/#/zh-CN/component/table',
+      span: 24,
+      formId: 101,
+      renderKey: 1595761764203,
+      componentName: 'row101',
+      showLabel: true,
+      changeTag: true,
+      labelWidth: null,
+      label: '表格',
+      dataType: 'dynamic',
+      method: 'get',
+      dataPath: 'list',
+      dataConsumer: 'data',
+      url: 'https://www.fastmock.site/mock/f8d7a54fb1e60561e2f720d5a810009d/fg/tableData', // 请求数据的地址
+      children: [{
+        __config__: {
+          layout: 'raw',
+          tag: 'el-table-column',
+          renderKey: 15957617660153
+        },
+        prop: 'date',
+        label: '日期'
+      }, {
+        __config__: {
+          layout: 'raw',
+          tag: 'el-table-column',
+          renderKey: 15957617660152
+        },
+        prop: 'address',
+        label: '地址'
+      }, {
+        __config__: {
+          layout: 'raw',
+          tag: 'el-table-column',
+          renderKey: 15957617660151
+        },
+        prop: 'name',
+        label: '名称'
+      }, {
+        __config__: {
+          layout: 'raw',
+          tag: 'el-table-column',
+          renderKey: 1595774496335,
+          children: [
+            {
+              __config__: {
+                label: '按钮',
+                tag: 'el-button',
+                tagIcon: 'button',
+                layout: 'raw',
+                renderKey: 1595779809901
+              },
+              __slot__: {
+                default: '主要按钮'
+              },
+              type: 'primary',
+              icon: 'el-icon-search',
+              round: false,
+              size: 'medium'
+            }
+          ]
+        },
+        label: '操作'
+      }]
+    },
+    data: [], // 数据
+    directives: [{
+      name: 'loading',
+      value: true
+    }],
+    border: true, // 是否带有纵向边框
+    stripe: true, // 是否为斑马纹 table
+    'show-header': true, // 是否显示表头
+    size: 'medium', // Table 的尺寸
+    type: 'default',
+    justify: 'start',
+    align: 'top'
   }
 ]
 

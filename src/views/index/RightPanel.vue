@@ -438,6 +438,39 @@
                 />
               </el-form-item>
 
+              <el-form-item label="纵向边框">
+                <el-switch v-model="activeData.border" />
+              </el-form-item>
+
+              <el-form-item label="斑马纹">
+                <el-switch v-model="activeData.stripe" />
+              </el-form-item>
+
+              <el-form-item label="显示表头">
+                <el-switch v-model="activeData['show-header']" />
+              </el-form-item>
+
+              <draggable
+                :list="activeData.__config__.children"
+                :animation="340"
+                group="selectItem"
+                handle=".option-drag"
+              >
+                <div v-for="(item, index) in activeData.__config__.children" :key="index" class="select-item">
+                  <template v-if="item.prop">
+                    <el-input v-model="item.label" placeholder="选项名" size="small" />
+                    <el-input
+                      v-model="item.prop"
+                      placeholder="选项值"
+                      size="small"
+                    />
+                    <div class="close-btn select-line-icon" @click="activeData.__config__.children.splice(index, 1)">
+                      <i class="el-icon-remove-outline" />
+                    </div>
+                  </template>
+                </div>
+              </draggable>
+
               <template v-if="activeData.props && activeData.props.props">
                 <el-form-item label="标签键名">
                   <el-input v-model="activeData.props.props.label" placeholder="请输入标签键名" />
@@ -540,6 +573,7 @@
               (activeData.__config__.optionType === 'button' ||
                 activeData.__config__.border ||
                 activeData.__config__.tag === 'el-color-picker' ||
+                activeData.__config__.tag === 'el-table' ||
                 activeData.__config__.tag === 'el-button')"
             label="组件尺寸"
           >

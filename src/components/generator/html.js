@@ -110,6 +110,13 @@ const layouts = {
     </el-row>`
     str = colWrapper(scheme, str)
     return str
+  },
+  raw(scheme) {
+    let str = ''
+    const config = scheme.__config__
+    const tagDom = tags[config.tag] ? tags[config.tag](scheme) : null
+    str = `${tagDom}`
+    return str
   }
 }
 
@@ -344,7 +351,31 @@ const tags = {
     const width = `width="${el.width}"`
     const height = `height="${el.height}"`
     return `<${tag} ${src} ${width} ${height} />`
+  },
+  'el-table': el => {
+    const {
+      tag
+    } = attrBuilder(el)
+    const child = elTableColumn(el)
+    return `<${tag} :data="${confGlobal.formModel}.${el.__vModel__}">${child}</${tag}>`
   }
+}
+
+function elTableColumn(scheme) {
+  const children = []
+  const config = scheme.__config__
+  if (config.children.length > 0) {
+    const { tag } = scheme.__config__.children[0].__config__
+    config.children.forEach(ts => {
+      ts.prop && children.push(`<${tag} label="${ts.label}" align="${ts.align}" prop="${ts.prop}"></${tag}>`)
+      // 这里的话我没有做判断  只是写一个简单的逻辑  没有做任何判断  这里可以给操作加一个特殊的标志
+      if (!ts.prop) {
+        const actionChildren = ts.__config__.children.map(el => layouts[el.__config__.layout](el))
+        children.push(`<${tag} label="操作">\n<template slot-scope="scope">${actionChildren}</template></${tag}>`)
+      }
+    })
+  }
+  return children.join('\n')
 }
 
 function attrBuilder(el) {
