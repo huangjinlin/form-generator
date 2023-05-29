@@ -394,7 +394,21 @@
             </div>
             <el-divider />
           </template>
-
+          <template v-if="activeData.__config__.tag === 'el-card'">
+            <el-form-item label="阴影显示时机">
+              <el-radio-group v-model="activeData.shadow">
+                <el-radio-button label="always ">
+                  always
+                </el-radio-button>
+                <el-radio-button label="hover ">
+                  hover
+                </el-radio-button>
+                <el-radio-button label="never">
+                  never
+                </el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+          </template>
           <template v-if="['el-cascader', 'el-table'].includes(activeData.__config__.tag)">
             <el-divider>选项</el-divider>
             <el-form-item v-if="activeData.__config__.dataType" label="数据类型">

@@ -77,6 +77,48 @@ const layouts = {
     }}>
       {child}
     </render>
+  },
+  tsCard(h, currentItem, index, list) {
+    const { activeItem } = this.$listeners
+    const config = currentItem.__config__
+    let className = this.activeId === config.formId
+      ? 'drawing-row-item active-from-item'
+      : 'drawing-row-item'
+    if (this.formConf.unFocusedComponentBorder) className += ' unfocus-bordered'
+    const tsCardHeader = []
+    const tsCardBody = []
+    config.children.cardHeader.forEach(item => {
+      const layout = layouts[item.__config__.layout]
+      tsCardHeader.push(layout.call(this, h, item, index, config.children.cardHeader))
+    })
+    config.children.cardBody.forEach(item => {
+      const layout = layouts[item.__config__.layout]
+      tsCardBody.push(layout.call(this, h, item, index, config.children.cardBody))
+    })
+    //   <draggable list={config.children.cardHeader || []} animation={340}
+    //   group="componentsGroup" className="drag-wrapper">
+    //     {tsCardHeader}
+    // </draggable>
+    return (
+      <el-col span={config.span} class={className}
+              nativeOnClick={event => { activeItem(currentItem); event.stopPropagation() }}>
+        <el-form-item label-width={config.showLabel ? `${config.labelWidth}px` : '0px'}
+                      label={config.showLabel ? config.label : ''} required={config.required}>
+          <el-card className="box-card">
+            <div slot="header" className="clearfix">
+              <div style="display: flex">
+                <span>{config.label}</span>
+              </div>
+            </div>
+            <draggable style="height:60px" list={config.children.cardBody || []}
+                       animation={340} group="componentsGroup" className="drag-wrapper">
+              {tsCardBody}
+            </draggable>
+          </el-card>
+        </el-form-item>
+        {components.itemBtns.apply(this, arguments)}
+      </el-col>
+    )
   }
 }
 

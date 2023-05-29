@@ -52,6 +52,21 @@ const layouts = {
     return (
       <render conf={scheme} on={listeners}>{child}</render>
     )
+  },
+  tsCard(h, scheme) {
+    const cardBody = renderChildren.apply(this, arguments)
+    return (
+      <el-col span={scheme.span}>
+        <el-row gutter={scheme.gutter}>
+          <el-card className="box-card">
+            <div slot="header" className="clearfix">
+              <span>{scheme.__config__.label}</span>
+            </div>
+            <div>{cardBody}</div>
+          </el-card>
+        </el-row>
+      </el-col>
+    )
   }
 }
 
@@ -100,14 +115,21 @@ function renderFormItem(h, elementList) {
 
 function renderChildren(h, scheme) {
   const config = scheme.__config__
-  if (!Array.isArray(config.children)) return null
+  let children
+  if (scheme.__config__.tag === 'el-card') {
+    children = scheme.__config__.children.cardBody
+  } else {
+    children = config.children
+  }
+  if (!Array.isArray(children)) return null
   // return renderFormItem.call(this, h, config.children)
-  return config.children.map((el, i) => {
+  return children.map((el, i) => {
     const layout = layouts[el.__config__.layout]
     if (layout) {
       return layout.call(this, h, el, i, config.children)
     }
-    return renderFormItem.call(this)
+    // return renderFormItem.call(this)
+    return renderFormItem.call(this, h, children)
   })
 }
 
@@ -160,33 +182,43 @@ export default {
   },
   methods: {
     initFormData(componentList, formData) {
-      componentList.forEach(cur => {
-        const config = cur.__config__
-        if (cur.__vModel__) formData[cur.__vModel__] = config.defaultValue
-        if (config.children) this.initFormData(config.children, formData)
-      })
+      if (Array.isArray(componentList)) {
+        componentList.forEach(cur => {
+          const config = cur.__config__
+          if (cur.__vModel__) formData[cur.__vModel__] = config.defaultValue
+          if (config.children) this.initFormData(config.children, formData)
+        })
+      } else {
+        componentList.cardBody.forEach(cur => {
+          const config = cur.__config__
+          if (cur.__vModel__) formData[cur.__vModel__] = config.defaultValue
+          if (config.children) this.initFormData(config.children, formData)
+        })
+      }
     },
     buildRules(componentList, rules) {
-      componentList.forEach(cur => {
-        const config = cur.__config__
-        if (Array.isArray(config.regList)) {
-          if (config.required) {
-            const required = { required: config.required, message: cur.placeholder }
-            if (Array.isArray(config.defaultValue)) {
-              required.type = 'array'
-              required.message = `请至少选择一个${config.label}`
+      if (Array.isArray(componentList)) {
+        componentList.forEach(cur => {
+          const config = cur.__config__
+          if (Array.isArray(config.regList)) {
+            if (config.required) {
+              const required = { required: config.required, message: cur.placeholder }
+              if (Array.isArray(config.defaultValue)) {
+                required.type = 'array'
+                required.message = `请至少选择一个${config.label}`
+              }
+              required.message === undefined && (required.message = `${config.label}不能为空`)
+              config.regList.push(required)
             }
-            required.message === undefined && (required.message = `${config.label}不能为空`)
-            config.regList.push(required)
+            rules[cur.__vModel__] = config.regList.map(item => {
+              item.pattern && (item.pattern = eval(item.pattern))
+              item.trigger = ruleTrigger && ruleTrigger[config.tag]
+              return item
+            })
           }
-          rules[cur.__vModel__] = config.regList.map(item => {
-            item.pattern && (item.pattern = eval(item.pattern))
-            item.trigger = ruleTrigger && ruleTrigger[config.tag]
-            return item
-          })
-        }
-        if (config.children) this.buildRules(config.children, rules)
-      })
+          if (config.children) this.buildRules(config.children, rules)
+        })
+      }
     },
     resetForm() {
       this.formConfCopy = deepClone(this.formConf)

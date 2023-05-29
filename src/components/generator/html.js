@@ -117,7 +117,22 @@ const layouts = {
     const tagDom = tags[config.tag] ? tags[config.tag](scheme) : null
     str = `${tagDom}`
     return str
+  },
+
+  tsCard(scheme) {
+    const cardBody = buildElCardChild(scheme)
+    return `<el-row><el-col :span=${scheme.__config__.span}><el-card :body-style="{ padding: '0px' }">
+      <div slot="header" className="clearfix"><span>${scheme.__config__.label}</span>
+      </div><div style="padding: 14px;">${cardBody}</div></el-card><el-col/></el-row>`
   }
+
+}
+
+// el-card 子级
+function buildElCardChild(scheme) {
+  const { cardBody } = scheme.__config__.children
+  const actionChildren = cardBody.map(el => layouts[el.__config__.layout](el))
+  return actionChildren.join('\n')
 }
 
 function createFun(el) {
