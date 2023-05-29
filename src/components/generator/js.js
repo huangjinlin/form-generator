@@ -66,6 +66,10 @@ function buildAttributes(scheme, dataList, ruleList, optionsList, methodList, pr
     }
   }
 
+  if (scheme.tiger) {
+    buildOptionMethod(null, null, methodList, scheme)
+  }
+
   // 处理props
   if (scheme.props && scheme.props.props) {
     buildProps(scheme, propsList)
@@ -230,17 +234,30 @@ function buildSubmitUpload(scheme) {
 
 function buildOptionMethod(methodName, model, methodList, scheme) {
   const config = scheme.__config__
-  const str = `${methodName}() {
-    // 注意：this.$axios是通过Vue.prototype.$axios = axios挂载产生的
-    this.$axios({
-      method: '${config.method}',
-      url: '${config.url}'
-    }).then(resp => {
-      var { data } = resp
-      this.${model} = data.${config.dataPath}
-    })
-  },`
-  methodList.push(str)
+  if (config.url) {
+    const str = `${methodName}() {
+      // 注意：this.$axios是通过Vue.prototype.$axios = axios挂载产生的
+      this.$axios({
+        method: '${config.method}',
+        url: '${config.url}'
+      }).then(resp => {
+        var { data } = resp
+        this.${model} = data.${config.dataPath}
+      })
+    },`
+    methodList.push(str)
+  }
+  if (scheme.tiger) {
+    // eslint-disable-next-line guard-for-in,no-restricted-syntax
+    for (const funKey in scheme.tiger) {
+      console.log(scheme.tiger[funKey])
+      const val = scheme.tiger[funKey].match(/\((.+?)\)/g)[0] || '()'
+      const start = scheme.tiger[funKey].split('{')
+      const eng = start[1].split('}')
+      const str = `${scheme.__vModel__}${funKey}${val} {${eng[0]}},`
+      methodList.push(str)
+    }
+  }
 }
 
 // js整体拼接

@@ -26,6 +26,46 @@ export default {
         fields: [
           {
             __config__: {
+              label: '下拉选择',
+              showLabel: true,
+              labelWidth: null,
+              tag: 'el-select',
+              tagIcon: 'select',
+              layout: 'colFormItem',
+              span: 24,
+              required: true,
+              regList: [],
+              changeTag: true,
+              document: 'https://element.eleme.cn/#/zh-CN/component/select',
+              formId: 101,
+              renderKey: '1011679644596928'
+            },
+            __slot__: {
+              options: [{
+                label: '选项一',
+                value: 1
+              }, {
+                label: '选项二',
+                value: 2
+              }]
+            },
+            on: {},
+            placeholder: '请选择下拉选择',
+            style: {
+              width: '100%'
+            },
+            clearable: true,
+            disabled: false,
+            filterable: false,
+            multiple: false,
+            __vModel__: 'field101',
+            tiger: {
+              change: 'function change(value) {\r\n    console.log(value)\r\n    that.changeData("field102", value)\r\n}'
+            },
+            random: '363981'
+          },
+          {
+            __config__: {
               label: '图片',
               labelWidth: null,
               labelHeight: null,
@@ -206,6 +246,9 @@ export default {
             console.log('表单的Model：', this.formData)
             console.log('表单的ref：', this.$refs.elForm)
           }
+          // changeData(val) {
+          //   this.changeFormData('mobile2', val)
+          // }
         },
         formRef: 'elForm',
         formModel: 'formData',
@@ -249,6 +292,9 @@ export default {
             style: {
               width: '100%'
             },
+            // on: {
+            //   change: 'changeData'
+            // },
             clearable: true,
             'prefix-icon': 'el-icon-mobile',
             'suffix-icon': '',

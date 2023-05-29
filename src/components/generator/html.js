@@ -113,6 +113,18 @@ const layouts = {
   }
 }
 
+function createFun(el) {
+  if (!el.tiger) {
+    return null
+  }
+  const funObj = {}
+  // eslint-disable-next-line guard-for-in,no-restricted-syntax
+  for (const funKey in el.tiger) {
+    funObj[funKey] = `@${funKey}="${el.__vModel__}${funKey}"`
+  }
+  return funObj
+}
+
 const tags = {
   'el-button': el => {
     const {
@@ -165,12 +177,18 @@ const tags = {
     const {
       tag, disabled, vModel, clearable, placeholder, width
     } = attrBuilder(el)
+    const Fun = createFun(el)
+    let FunString = ''
+    // eslint-disable-next-line no-restricted-syntax,guard-for-in
+    for (const funKey in Fun) {
+      FunString += `${Fun[funKey]} `
+    }
     const filterable = el.filterable ? 'filterable' : ''
     const multiple = el.multiple ? 'multiple' : ''
     let child = buildElSelectChild(el)
 
     if (child) child = `\n${child}\n` // 换行
-    return `<${tag} ${vModel} ${placeholder} ${disabled} ${multiple} ${filterable} ${clearable} ${width}>${child}</${tag}>`
+    return `<${tag} ${vModel} ${FunString} ${placeholder} ${disabled} ${multiple} ${filterable} ${clearable} ${width}>${child}</${tag}>`
   },
   'el-radio-group': el => {
     const { tag, disabled, vModel } = attrBuilder(el)

@@ -8,9 +8,26 @@
       <a class="document-link" target="_blank" :href="documentLink" title="查看组件文档">
         <i class="el-icon-link" />
       </a>
+      <el-dialog
+        title="自定义事件在线编辑"
+        :visible.sync="codeVisible"
+        class="ts-dialog"
+        :close-on-click-modal="false"
+        @close="closeCodeVisible"
+      >
+        <div id="monaco" style="width: 100%; height: 300px" />
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="onCodeVisible">确 定</el-button>
+        </span>
+      </el-dialog>
       <el-scrollbar class="right-scrollbar">
         <!-- 组件属性 -->
         <el-form v-show="currentTab==='field' && showField" size="small" label-width="90px">
+          <el-form-item v-if="activeData.on" label="自定义事件">
+            <el-button @click="openCodeVisible()">
+              在线编辑
+            </el-button>
+          </el-form-item>
           <el-form-item v-if="activeData.__config__.changeTag" label="组件类型">
             <el-select
               v-model="activeData.__config__.tagIcon"
@@ -725,6 +742,7 @@ import {
   inputComponents, selectComponents, layoutComponents
 } from '@/components/generator/config'
 import { saveFormConf } from '@/utils/db'
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js'
 
 const dateTimeFormat = {
   date: 'yyyy-MM-dd',
@@ -838,7 +856,9 @@ export default {
           const config = data.__config__
           return data.componentName || `${config.label}: ${data.__vModel__}`
         }
-      }
+      },
+      codeVisible: false,
+      monacoEditor: null
     }
   },
   computed: {
@@ -1036,6 +1056,58 @@ export default {
       if (needRerenderList.includes(this.activeData.__config__.tag)) {
         this.activeData.__config__.renderKey = +new Date()
       }
+    },
+    init() {
+      // 使用 - 创建 monacoEditor 对象
+      this.monacoEditor = monaco.editor.create(document.getElementById('monaco'), {
+        theme: 'vs-dark', // 主题
+        value: this.activeData.tiger.change, // 默认显示的值
+        language: 'javascript',
+        folding: true, // 是否折叠
+        foldingHighlight: true, // 折叠等高线
+        foldingStrategy: 'indentation', // 折叠方式  auto | indentation
+        showFoldingControls: 'always', // 是否一直显示折叠 always | mouseover
+        disableLayerHinting: true, // 等宽优化
+        emptySelectionClipboard: false, // 空选择剪切板
+        selectionClipboard: false, // 选择剪切板
+        automaticLayout: true, // 自动布局
+        codeLens: false, // 代码镜头
+        scrollBeyondLastLine: false, // 滚动完最后一行后再滚动一屏幕
+        colorDecorators: true, // 颜色装饰器
+        accessibilitySupport: 'off', // 辅助功能支持  "auto" | "off" | "on"
+        lineNumbers: 'on', // 行号 取值： "on" | "off" | "relative" | "interval" | function
+        lineNumbersMinChars: 5, // 行号最小字符   number
+        enableSplitViewResizing: false,
+        readOnly: false // 是否只读  取值 true | false
+      })
+    },
+    openCodeVisible() {
+      this.codeVisible = true
+      const that = this
+      this.$nextTick(() => {
+        that.init()
+      })
+    },
+    closeCodeVisible() {
+      this.codeVisible = false
+      document.getElementById('monaco').innerHTML = ''
+      this.monacoEditor = null
+    },
+    onCodeVisible() {
+      const value = this.monacoEditor.getValue()
+      this.activeData.tiger.change = value
+      this.activeData.random = this.randomNumber(6)
+      this.codeVisible = false
+    },
+    randomNumber(len) {
+      const charActors = '1234567890'
+      let value = ''; let i
+      for (let j = 1; j <= len; j++) {
+        // eslint-disable-next-line radix
+        i = parseInt(10 * Math.random())
+        value += charActors.charAt(i)
+      }
+      return value
     }
   }
 }

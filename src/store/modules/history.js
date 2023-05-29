@@ -96,6 +96,7 @@ const actions = {
               }
             }
             // 通过表格对象的add()方法，向表格写入一条记录
+            console.log('data', data, 'id', id)
             historyStore.add({
               id,
               data: data.data

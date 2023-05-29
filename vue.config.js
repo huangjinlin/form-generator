@@ -1,4 +1,5 @@
 const path = require('path')
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 
 const minify = process.env.NODE_ENV === 'development' ? false : {
   collapseWhitespace: true,
@@ -44,7 +45,10 @@ module.exports = {
       vue: 'Vue',
       'vue-router': 'VueRouter',
       'element-ui': 'ELEMENT'
-    }
+    },
+    plugins: [
+      new MonacoWebpackPlugin({ languages: ['javascript', 'typescript', 'html', 'css', 'json'] })
+    ]
   },
   chainWebpack(config) {
     // set svg-sprite-loader

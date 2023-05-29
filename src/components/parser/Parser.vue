@@ -25,7 +25,7 @@ const layouts = {
       <el-col span={config.span}>
         <el-form-item label-width={labelWidth} prop={scheme.__vModel__}
           label={config.showLabel ? config.label : ''}>
-          <render conf={scheme} on={listeners} />
+          <render that={this} conf={scheme} on={listeners} />
         </el-form-item>
       </el-col>
     )
@@ -104,8 +104,15 @@ function setValue(event, config, scheme) {
 function buildListeners(scheme) {
   const config = scheme.__config__
   const methods = this.formConf.__methods__ || {}
+  const tiger = scheme.tiger || {}
   const listeners = {}
-
+  Object.keys(tiger).forEach(key => {
+    const start = tiger[key].split('{')
+    const eng = start[1].split('}')
+    listeners[key] = (value, that) => {
+      eval(eng[0])
+    }
+  })
   // 给__methods__中的方法绑定this和event
   Object.keys(methods).forEach(key => {
     listeners[key] = event => methods[key].call(this, event)
@@ -177,7 +184,29 @@ export default {
         this.$emit('submit', this[this.formConf.formModel])
         return true
       })
+    },
+    changeData(key, value) {
+      this.formConfCopy.fields.forEach(ts => {
+        if (ts.__vModel__ === key) {
+          this.$set(ts, 'defaultValue', value)
+          ts.props = {
+            value
+          }
+          this.$set(this[this.formConfCopy.formModel], ts.__vModel__, value) // 校验赋值
+        }
+      })
     }
+    // changeFormData(key, value) {
+    //   this.formConfCopy.fields.forEach(ts => {
+    //     if (ts.__vModel__ === key) {
+    //       this.$set(ts, 'defaultValue', value)
+    //       ts.props = {
+    //         value
+    //       }
+    //       this.$set(this[this.formConfCopy.formModel], ts.__vModel__, value) // 校验赋值
+    //     }
+    //   })
+    // }
   },
   render(h) {
     return renderFrom.call(this, h)

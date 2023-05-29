@@ -212,6 +212,12 @@ export const selectComponents = [
         value: 2
       }]
     },
+    on: {
+      change(value) {
+        console.log(value)
+      }
+    },
+    random: 123,
     placeholder: '请选择',
     style: { width: '100%' },
     clearable: true,
