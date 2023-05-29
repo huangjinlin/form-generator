@@ -817,6 +817,57 @@ export const layoutComponents = [
     },
     // 其余的为可直接写在组件标签上的属性
     shadow: 'always' // 设置阴影显示时机
+  },
+  {
+    __config__: {
+      layout: 'colFormItem',
+      tagIcon: 'table',
+      tag: 'el-collapse',
+      document: 'https://element.eleme.cn/#/zh-CN/component/collapse',
+      span: 24,
+      formId: 101,
+      renderKey: 1595761764204,
+      componentName: 'row102',
+      showLabel: false,
+      changeTag: true,
+      labelWidth: null,
+      label: '折叠面板',
+      dataType: 'dynamic',
+      method: 'get',
+      children: [{
+        __config__: {
+          layout: 'raw',
+          tag: 'el-collapse-item',
+          renderKey: 15957617660111,
+          children: [{
+            __config__: {
+              layout: 'rowFormItem',
+              children: []
+            }
+          }]
+        },
+        title: '折叠面板1', // 面板标题
+        name: 1, // 唯一标志符
+        disabled: false // 是否禁用
+      },
+      {
+        __config__: {
+          layout: 'raw',
+          tag: 'el-collapse-item',
+          renderKey: 15957617660112,
+          children: [{
+            __config__: {
+              layout: 'rowFormItem',
+              children: []
+            }
+          }]
+        },
+        title: '折叠面板2',
+        name: 2,
+        disabled: false
+      }]
+    },
+    accordion: false // 是否手风琴模式
   }
 ]
 

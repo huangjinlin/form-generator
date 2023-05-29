@@ -373,7 +373,31 @@ const tags = {
     } = attrBuilder(el)
     const child = elTableColumn(el)
     return `<${tag} :data="${confGlobal.formModel}.${el.__vModel__}">${child}</${tag}>`
+  },
+  'el-collapse': el => {
+    const {
+      tag, vModel
+    } = attrBuilder(el)
+    const accordion = `:accordion="${el.accordion}"`
+    let child = buildElCollapseChild(el)
+    if (child) child = `\n${child}\n` // 换行
+    return `<${tag} ${vModel} ${accordion} >${child}</${tag}>`
   }
+}
+
+// el-collapse 子级
+function buildElCollapseChild(scheme) {
+  const children = []
+  const collapses = scheme.__config__.children
+  if (collapses && collapses.length) {
+    for (let i = 0; i < collapses.length; i++) {
+      const actionChildren = collapses[i].__config__.children.map(el => layouts[el.__config__.layout](el))
+      children.push(`<el-collapse-item title="${collapses[i].title}" name="${collapses[i].name}" :disabled="${collapses[i].disabled}">
+        ${actionChildren}
+      </el-collapse-item>`)
+    }
+  }
+  return children.join('\n')
 }
 
 function elTableColumn(scheme) {

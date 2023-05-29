@@ -119,6 +119,20 @@
               @input="onDefaultValueInput"
             />
           </el-form-item>
+          <template v-if="activeData.__config__.tag==='el-collapse'">
+            <el-form-item label="手风琴模式">
+              <el-switch v-model="activeData.accordion" />
+            </el-form-item>
+            <el-form-item v-for="(item, index) in activeData.__config__.children" :key="index" :label="`面板${index + 1}名称`">
+              <el-input
+                v-model="item.title"
+                :placeholder="`请输入面板${index}名称`"
+              />
+            </el-form-item>
+            <el-form-item v-for="(item, index) in activeData.__config__.children" :key="index" label-width="160px" :label="`${item.title}是否禁用`">
+              <el-switch v-model="item.disabled" />
+            </el-form-item>
+          </template>
           <!-- 增加el-image操作 -->
           <template v-if="activeData.__config__.tag==='el-image'">
             <el-form-item label="图片源">

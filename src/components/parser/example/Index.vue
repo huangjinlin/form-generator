@@ -26,6 +26,162 @@ export default {
         fields: [
           {
             __config__: {
+              layout: 'colFormItem',
+              tagIcon: 'table',
+              tag: 'el-collapse',
+              document: 'https://element.eleme.cn/#/zh-CN/component/collapse',
+              span: 24,
+              formId: 101,
+              renderKey: '1011678686427935',
+              componentName: 'row102',
+              showLabel: false,
+              changeTag: true,
+              labelWidth: null,
+              label: '折叠面板',
+              dataType: 'dynamic',
+              method: 'get',
+              children: [{
+                __config__: {
+                  layout: 'raw',
+                  tag: 'el-collapse-item',
+                  renderKey: '1021678686427935',
+                  children: [{
+                    __config__: {
+                      layout: 'rowFormItem',
+                      children: [{
+                        __config__: {
+                          label: '多行文本',
+                          labelWidth: null,
+                          showLabel: true,
+                          tag: 'el-input',
+                          tagIcon: 'textarea',
+                          required: true,
+                          layout: 'colFormItem',
+                          span: 24,
+                          regList: [],
+                          changeTag: true,
+                          document: 'https://element.eleme.cn/#/zh-CN/component/input',
+                          formId: 107,
+                          renderKey: '1071678686433781'
+                        },
+                        type: 'textarea',
+                        placeholder: '请输入多行文本',
+                        autosize: {
+                          minRows: 4,
+                          maxRows: 4
+                        },
+                        style: {
+                          width: '100%'
+                        },
+                        maxlength: null,
+                        'show-word-limit': false,
+                        readonly: false,
+                        disabled: false,
+                        __vModel__: 'field107'
+                      }, {
+                        __config__: {
+                          label: '单行文本',
+                          labelWidth: null,
+                          showLabel: true,
+                          changeTag: true,
+                          tag: 'el-input',
+                          tagIcon: 'input',
+                          required: true,
+                          layout: 'colFormItem',
+                          span: 24,
+                          document: 'https://element.eleme.cn/#/zh-CN/component/input',
+                          regList: [],
+                          formId: 106,
+                          renderKey: '1061678686431735'
+                        },
+                        __slot__: {
+                          prepend: '',
+                          append: ''
+                        },
+                        placeholder: '请输入单行文本',
+                        style: {
+                          width: '100%'
+                        },
+                        clearable: true,
+                        'prefix-icon': '',
+                        'suffix-icon': '',
+                        maxlength: null,
+                        'show-word-limit': false,
+                        readonly: false,
+                        disabled: false,
+                        __vModel__: 'field106'
+                      }],
+                      formId: 103,
+                      renderKey: '1031678686427935',
+                      componentName: 'row103'
+                    }
+                  }],
+                  formId: 102
+                },
+                title: '折叠面板1',
+                name: 1,
+                disabled: false
+              }, {
+                __config__: {
+                  layout: 'raw',
+                  tag: 'el-collapse-item',
+                  renderKey: '1041678686427935',
+                  children: [{
+                    __config__: {
+                      layout: 'rowFormItem',
+                      children: [{
+                        __config__: {
+                          label: '下拉选择',
+                          showLabel: true,
+                          labelWidth: null,
+                          tag: 'el-select',
+                          tagIcon: 'select',
+                          layout: 'colFormItem',
+                          span: 24,
+                          required: true,
+                          regList: [],
+                          changeTag: true,
+                          document: 'https://element.eleme.cn/#/zh-CN/component/select',
+                          formId: 108,
+                          renderKey: '1081678686437193'
+                        },
+                        __slot__: {
+                          options: [{
+                            label: '选项一',
+                            value: 1
+                          }, {
+                            label: '选项二',
+                            value: 2
+                          }]
+                        },
+                        placeholder: '请选择下拉选择',
+                        style: {
+                          width: '100%'
+                        },
+                        clearable: true,
+                        disabled: false,
+                        filterable: false,
+                        multiple: false,
+                        __vModel__: 'field108'
+                      }],
+                      formId: 105,
+                      renderKey: '1051678686427935',
+                      componentName: 'row105'
+                    }
+                  }],
+                  formId: 104
+                },
+                title: '折叠面板2',
+                name: 2,
+                disabled: false
+              }],
+              defaultValue: [1]
+            },
+            accordion: false,
+            __vModel__: 'field101'
+          },
+          {
+            __config__: {
               formId: 101,
               componentName: 'row105',
               label: '卡片名称',
