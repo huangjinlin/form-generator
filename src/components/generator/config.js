@@ -933,6 +933,24 @@ export const layoutComponents = [
     editable: false, // 标签是否同时可增加和关闭
     'tab-position': 'top', // 选项卡所在位置
     stretch: false // 标签的宽度是否自撑开
+  },
+  {
+    __config__: {
+      label: '字典选择',
+      showLabel: true,
+      labelWidth: null,
+      tag: 'ts-select-data-dictionary',
+      tagIcon: 'select',
+      layout: 'colFormItem',
+      span: 24,
+      required: true,
+      regList: [],
+      changeTag: true,
+      document: 'https://element.eleme.cn/#/zh-CN/component/select'
+    },
+    placeholder: '请选择',
+    style: { width: '100%' },
+    code: '水果'
   }
 ]
 

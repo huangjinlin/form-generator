@@ -37,7 +37,8 @@ module.exports = {
     }
   },
   devServer: {
-    overlay: false
+    overlay: false,
+    proxy: 'https://api.oioweb.cn/api/'
   },
   productionSourceMap: false,
   configureWebpack: {

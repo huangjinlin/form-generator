@@ -5,11 +5,13 @@ import Tinymce from '@/components/tinymce/index.vue'
 import tsText from '@/components/ts-components/ts-text.vue'
 import tsLineChart from '@/components/ts-components/ts-line-chart.vue'
 import tsIframe from '@/components/ts-components/ts-iframe.vue'
+import tsSelectDataDictionary from '@/components/ts-components/ts-select-data-dictionary.vue'
 
 Vue.component('tinymce', Tinymce)
 Vue.component('tsText', tsText)
 Vue.component('tsLineChart', tsLineChart)
 Vue.component('tsIframe', tsIframe)
+Vue.component('tsSelectDataDictionary', tsSelectDataDictionary)
 Vue.prototype.$axios = axios
 
 const $previewApp = document.getElementById('previewApp')
