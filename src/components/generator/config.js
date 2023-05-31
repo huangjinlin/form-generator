@@ -868,6 +868,37 @@ export const layoutComponents = [
       }]
     },
     accordion: false // 是否手风琴模式
+  },
+  {
+    __config__: {
+      layout: 'tsSteps',
+      tagIcon: 'table',
+      tag: 'el-steps',
+      document: 'https://element.eleme.cn/#/zh-CN/component/steps',
+      span: 24,
+      formId: 101,
+      renderKey: 1595761764204,
+      componentName: 'row102',
+      showLabel: false,
+      changeTag: true,
+      labelWidth: null,
+      dataType: 'dynamic',
+      label: '步骤条'
+    },
+    children: [{
+      children: [],
+      description: '',
+      title: '步骤 2' // 标题
+    },
+    {
+      children: [],
+      description: '',
+      title: '步骤 2' // 标题
+    }],
+    'finish-status': 'success',
+    active: 0,
+    'align-center': false,
+    'finish-text': '完成步骤！'
   }
 ]
 

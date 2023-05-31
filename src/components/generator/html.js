@@ -118,14 +118,19 @@ const layouts = {
     str = `${tagDom}`
     return str
   },
-
   tsCard(scheme) {
     const cardBody = buildElCardChild(scheme)
     return `<el-row><el-col :span=${scheme.__config__.span}><el-card :body-style="{ padding: '0px' }">
       <div slot="header" className="clearfix"><span>${scheme.__config__.label}</span>
       </div><div style="padding: 14px;">${cardBody}</div></el-card><el-col/></el-row>`
+  },
+  tsSteps(scheme) {
+    const config = scheme.__config__
+    const tagDom = tags[config.tag] ? tags[config.tag](scheme) : null
+    let str = tagDom
+    str = colWrapper(scheme, str)
+    return str
   }
-
 }
 
 // el-card 子级
@@ -382,7 +387,62 @@ const tags = {
     let child = buildElCollapseChild(el)
     if (child) child = `\n${child}\n` // 换行
     return `<${tag} ${vModel} ${accordion} >${child}</${tag}>`
+  },
+  'el-steps': el => {
+    const config = el.__config__
+    const status = config['finish-status'] ? `finish-status=${config['finish-status']} ` : ''
+    const finishText = config['finish-text'] ? config['finish-text'] : '已完成！'
+    const step = buildElStepsChild(el)
+    const child = buildElStepChild(el)
+    const stepsLength = el.children.length
+    return `
+    <div>
+      <el-steps :active="${confGlobal.formModel}.steps_${config.formId}" ${status}>
+        ${step}
+      </el-steps>
+      ${child}
+      <el-row type="flex" justify="center" style="clear:both;margin-bottom:10px;">
+        <el-button size="small" v-if="${confGlobal.formModel}.steps_${config.formId} > 0" @click="${confGlobal.formModel}.steps_${config.formId}--">上一步</el-button>
+        <el-button size="small" v-if="${confGlobal.formModel}.steps_${config.formId} < ${stepsLength}" @click="tsStepClick" type="primary">下一步</el-button>
+      </el-row>
+      <div v-if="${confGlobal.formModel}.steps_${config.formId}==${stepsLength}">完成啦啦啦啦啦啦啦</div>
+    </div>
+    `
   }
+}
+// 获取steps下的step
+function buildElStepsChild(el) {
+  const stepTitle = []
+  const { children } = el
+  for (let i = 0; i < children.length; i++) {
+    stepTitle.push(`<el-step title="${children[i].title}" description="${children[i].description}">12333333333333333332</el-step>`)
+  }
+  return stepTitle.join('\n')
+}
+
+// 获取step下的子元素
+function buildElStepChild(el) {
+  const config = el.__config__
+  const stepChildes = []
+  const { children } = el
+  for (let i = 0; i < children.length; i++) {
+    if (children[i].children.length > 0) {
+      let childHtml = []
+      for (let j = 0; j < children[i].children.length; j++) {
+        if (children[i].children[j]) {
+          const oneChildHtml = layouts[children[i].children[j].__config__.layout](children[i].children[j])
+          childHtml.push(oneChildHtml)
+        }
+      }
+      childHtml = childHtml.join('\n')
+      stepChildes.push(
+        `<div v-show="${confGlobal.formModel}.steps_${config.formId}===${i}" label='${children[i].title}'>
+          ${childHtml}
+        </div>`
+      )
+    }
+  }
+  return stepChildes.join('\n')
 }
 
 // el-collapse 子级

@@ -29,7 +29,7 @@ export function makeUpJs(formConfig, type) {
   const created = []
 
   formConfig.fields.forEach(el => {
-    buildAttributes(el, dataList, ruleList, optionsList, methodList, propsList, uploadVarList, created)
+    buildAttributes(el, dataList, ruleList, optionsList, methodList, propsList, uploadVarList, created, formConfig)
   })
 
   const script = buildexport(
@@ -48,7 +48,7 @@ export function makeUpJs(formConfig, type) {
 }
 
 // 构建组件属性
-function buildAttributes(scheme, dataList, ruleList, optionsList, methodList, propsList, uploadVarList, created) {
+function buildAttributes(scheme, dataList, ruleList, optionsList, methodList, propsList, uploadVarList, created, formConfig) {
   const config = scheme.__config__
   const slot = scheme.__slot__
   buildData(scheme, dataList)
@@ -64,6 +64,14 @@ function buildAttributes(scheme, dataList, ruleList, optionsList, methodList, pr
       buildOptionMethod(methodName, model, methodList, scheme)
       callInCreated(methodName, created)
     }
+  }
+  if (config.tag === 'el-steps') {
+    buildOptionMethod(null, null, methodList, scheme)
+  } else if (config.tag === 'el-table') {
+    const model = `${formConfig.formModel}.${scheme.__vModel__}`
+    const methodName = `get${scheme.__vModel__}`
+    buildOptionMethod(methodName, model, methodList, scheme)
+    callInCreated(methodName, created)
   }
 
   if (scheme.tiger) {
@@ -89,7 +97,13 @@ function buildAttributes(scheme, dataList, ruleList, optionsList, methodList, pr
   }
 
   // 构建子级组件属性
-  if (config.tag === 'el-card') {
+  if (config.tag === 'el-steps') {
+    scheme.children.forEach(children => {
+      children.children.forEach(item => {
+        buildAttributes(item, dataList, ruleList, optionsList, methodList, propsList, uploadVarList, created)
+      })
+    })
+  } else if (config.tag === 'el-card') {
     config.children.cardBody.forEach(item => {
       buildAttributes(item, dataList, ruleList, optionsList, methodList, propsList, uploadVarList, created)
     })
@@ -151,7 +165,11 @@ function mixinMethod(type) {
 function buildData(scheme, dataList) {
   const config = scheme.__config__
   if (scheme.__vModel__ === undefined) return
-  if (scheme.__config__.tag === 'el-image') {
+  if (config.tag === 'el-steps') {
+    dataList.push(`steps_${config.formId}: ${scheme.active},`)
+  } else if (config.tag === 'el-table') {
+    dataList.push(`${scheme.__vModel__}: []`)
+  } else if (scheme.__config__.tag === 'el-image') {
     const defaultValue = scheme['preview-src-list']
     dataList.push(`${scheme.__vModel__}: ${JSON.stringify(defaultValue)},`)
   } else {
@@ -250,6 +268,15 @@ function buildOptionMethod(methodName, model, methodList, scheme) {
       })
     },`
     methodList.push(str)
+  }
+  if (config.tag === 'el-steps') {
+    const stepsClick = `
+      // 这里没有加步骤条里面的字段校验，需要的话就在这里增加表单校验就好
+      tsStepClick(){
+        this.${confGlobal.formModel}.steps_${config.formId}++
+      },
+      `
+    methodList.push(stepsClick)
   }
   if (scheme.tiger) {
     // eslint-disable-next-line guard-for-in,no-restricted-syntax

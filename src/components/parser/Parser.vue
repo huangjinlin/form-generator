@@ -67,6 +67,34 @@ const layouts = {
         </el-row>
       </el-col>
     )
+  },
+  tsSteps(h, scheme) {
+    const { children } = scheme // 获取子节点
+    const exportPane = []
+    const listeners = buildListeners.call(this, scheme)
+    const { active } = scheme
+    const stepList = []
+    for (let i = 0; i < children.length; i++) {
+      stepList.push([<el-step title={children[i].title} description={children[i].description}></el-step>])
+    }
+    return <div style="margin-bottom: 20px;">
+      <render conf={scheme} on={listeners}>
+        {stepList}
+      </render>
+      {(active != null && active < children.length)
+        ? <div style="margin-top: 20px;">
+          {renderChildren.call(this, h, { children: children[active], tag: 'el-steps' })}
+      </div>
+        : ''}
+      <div>
+        <el-button size="small" onClick={() => { if (--scheme.active < 1) scheme.active = 0 }}>
+          上一步
+        </el-button>
+        <el-button size="small" onClick={() => { if (++scheme.active > stepList.length) scheme.active = 0 }}>
+          下一步
+        </el-button>
+      </div>
+    </div>
   }
 }
 
@@ -116,7 +144,9 @@ function renderFormItem(h, elementList) {
 function renderChildren(h, scheme) {
   const config = scheme.__config__
   let children
-  if (scheme.__config__.tag === 'el-card') {
+  if (scheme.tag === 'el-steps') {
+    children = scheme.children.children || []
+  } else if (scheme.__config__.tag === 'el-card') {
     children = scheme.__config__.children.cardBody
   } else {
     children = config.children
