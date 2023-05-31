@@ -951,6 +951,28 @@ export const layoutComponents = [
     placeholder: '请选择',
     style: { width: '100%' },
     code: '水果'
+  },
+  {
+    __config__: {
+      label: '远程搜索',
+      showLabel: true,
+      labelWidth: null,
+      tag: 'ts-universal-select',
+      tagIcon: 'select',
+      layout: 'colFormItem',
+      span: 24,
+      required: true,
+      regList: [],
+      changeTag: true,
+      document: 'https://element.eleme.cn/#/zh-CN/component/select'
+    },
+    placeholder: '请选择',
+    style: { width: '100%' },
+    requestApi: 'search/FoodHeat',
+    requestKey: 'keyword',
+    label: 'name',
+    field: 'desc',
+    requestType: 'get'
   }
 ]
 
