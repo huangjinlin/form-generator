@@ -65,7 +65,14 @@ function buildAttributes(scheme, dataList, ruleList, optionsList, methodList, pr
       callInCreated(methodName, created)
     }
   }
-  if (config.tag === 'el-steps') {
+  // 主要就是这一段代码的新增,其他地方都没有更改
+  if (config.tag === 'el-tabs') {
+    scheme.children.forEach(item => {
+      item.children.forEach(el => {
+        buildAttributes(el, dataList, ruleList, optionsList, methodList, propsList, uploadVarList, created)
+      })
+    })
+  } else if (config.tag === 'el-steps') {
     buildOptionMethod(null, null, methodList, scheme)
   } else if (config.tag === 'el-table') {
     const model = `${formConfig.formModel}.${scheme.__vModel__}`

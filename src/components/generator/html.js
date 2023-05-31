@@ -130,6 +130,13 @@ const layouts = {
     let str = tagDom
     str = colWrapper(scheme, str)
     return str
+  },
+  tsElTabs(scheme) {
+    const config = scheme.__config__
+    const tagDom = tags[config.tag] ? tags[config.tag](scheme) : null
+    let str = tagDom
+    str = colWrapper(scheme, str)
+    return str
   }
 }
 
@@ -408,7 +415,35 @@ const tags = {
       <div v-if="${confGlobal.formModel}.steps_${config.formId}==${stepsLength}">完成啦啦啦啦啦啦啦</div>
     </div>
     `
+  },
+  'el-tabs': el => {
+    const { tag, vModel } = attrBuilder(el)
+    const type = el.type ? `type="${el.type}"` : ''
+    const closable = el.closable ? `type="${el.closable}"` : ''
+    const tabPosition = el['tab-position'] ? `tab-position="${el['tab-position']}"` : ''
+    const child = exportTabsChild(el)
+    return `<${tag} ${type} ${vModel} ${closable} ${tabPosition}>${child}</${tag}>`
   }
+}
+function exportTabsChild(scheme) {
+  const childrenList = []
+  const { children } = scheme
+  for (let i = 0; i < children.length; i++) {
+    let childHtml = []
+    for (let j = 0; j < children[i].children.length; j++) {
+      if (children[i].children[j]) {
+        const oneChildHtml = layouts[children[i].children[j].__config__.layout](children[i].children[j])
+        childHtml.push(oneChildHtml)
+      }
+    }
+    childHtml = childHtml.join('\n')
+    childrenList.push(
+      `<el-tab-pane label='${children[i].label}'>
+          ${childHtml}
+        </el-tab-pane>`
+    )
+  }
+  return childrenList.join('\n')
 }
 // 获取steps下的step
 function buildElStepsChild(el) {

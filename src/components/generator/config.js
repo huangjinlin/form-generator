@@ -899,6 +899,40 @@ export const layoutComponents = [
     active: 0,
     'align-center': false,
     'finish-text': '完成步骤！'
+  },
+  {
+    __config__: {
+      formId: 102,
+      label: '标签页', // 在home.vue页面左侧呈现的组件名称
+      tagIcon: 'table', // 在home.vue页面左侧呈现的组件图标
+      showLabel: false, // 是否在中间可视化区域默认显示label
+      changeTag: false, // 是否在右侧操作面板可进行组件类型切换
+      labelWidth: null, // 组件默认宽度
+      defaultValue: 'first',
+      componentName: 'row89757',
+      tag: 'el-tabs', // 组件的名称
+      span: 24, // 默认栅格布局数值
+      layout: 'tsElTabs' // 在DraggableItem.vue中默认处理的方法
+    },
+    children: [
+      {
+        label: '用户管理',
+        children: [], // 主要用于存储拖拽进来的子组件
+        name: 'first'
+      },
+      {
+        children: [],
+        label: '配置管理',
+        name: 'second'
+      }
+    ],
+    // 从这里开始就是el-tabs标签的属性 主要是在home.vue页面的右侧操作面板进行操作更改
+    type: 'card', // 风格类型
+    closable: false, // 标签是否可关闭
+    addable: false, // 标签是否可增加
+    editable: false, // 标签是否同时可增加和关闭
+    'tab-position': 'top', // 选项卡所在位置
+    stretch: false // 标签的宽度是否自撑开
   }
 ]
 

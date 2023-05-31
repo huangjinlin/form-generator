@@ -77,7 +77,7 @@ const layouts = {
     for (let i = 0; i < children.length; i++) {
       stepList.push([<el-step title={children[i].title} description={children[i].description}></el-step>])
     }
-    return <div style="margin-bottom: 20px;">
+    return (<div style="margin-bottom: 20px;">
       <render conf={scheme} on={listeners}>
         {stepList}
       </render>
@@ -94,8 +94,32 @@ const layouts = {
           下一步
         </el-button>
       </div>
-    </div>
+    </div>)
+  },
+  tsElTabs(h, scheme) {
+    const { children } = scheme // 获取子节点
+    const exportPane = []
+    const listeners = buildListeners.call(this, scheme)
+    for (let i = 0; i < children.length; i++) {
+      const child = renderTabsChildren.call(this, h, children[i])
+      exportPane.push([<el-tab-pane label={children[i].label} name={children[i].name}>
+        {child}
+      </el-tab-pane>])
+    }
+    return <el-col span={scheme.span}>
+      <el-row gutter={scheme.gutter}>
+        <render conf={scheme} on={listeners}>
+          {exportPane}
+        </render>
+      </el-row>
+    </el-col>
   }
+}
+
+function renderTabsChildren(h, scheme, a) {
+  const config = scheme.children
+  if (!Array.isArray(config)) return null
+  return renderFormItem.call(this, h, config)
 }
 
 function renderFrom(h) {

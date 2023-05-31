@@ -26,6 +26,134 @@ export default {
         fields: [
           {
             __config__: {
+              label: '标签页',
+              tagIcon: 'table',
+              showLabel: false,
+              changeTag: false,
+              labelWidth: null,
+              defaultValue: 'first',
+              componentName: 'row89757',
+              tag: 'el-tabs',
+              span: 24,
+              layout: 'tsElTabs',
+              formId: 101,
+              renderKey: '1011678095467109'
+            },
+            children: [{
+              label: '用户管理',
+              children: [{
+                __config__: {
+                  label: '单行文本',
+                  labelWidth: null,
+                  showLabel: true,
+                  changeTag: true,
+                  tag: 'el-input',
+                  tagIcon: 'input',
+                  required: true,
+                  layout: 'colFormItem',
+                  span: 24,
+                  document: 'https://element.eleme.cn/#/zh-CN/component/input',
+                  regList: [],
+                  formId: 103,
+                  renderKey: '1031678095552330'
+                },
+                __slot__: {
+                  prepend: '',
+                  append: ''
+                },
+                placeholder: '请输入单行文本',
+                style: {
+                  width: '100%'
+                },
+                clearable: true,
+                'prefix-icon': '',
+                'suffix-icon': '',
+                maxlength: null,
+                'show-word-limit': false,
+                readonly: false,
+                disabled: false,
+                __vModel__: 'field103'
+              }],
+              name: 'first'
+            }, {
+              children: [],
+              label: '配置管理',
+              name: 'second'
+            }],
+            type: 'card',
+            closable: false,
+            addable: false,
+            editable: false,
+            'tab-position': 'top',
+            stretch: false,
+            __vModel__: 'field101'
+          }, {
+            __config__: {
+              label: '标签页',
+              tagIcon: 'table',
+              showLabel: false,
+              changeTag: false,
+              labelWidth: null,
+              defaultValue: 'second',
+              componentName: 'row89757',
+              tag: 'el-tabs',
+              span: 24,
+              layout: 'tsElTabs',
+              formId: 102,
+              renderKey: '1021678095474269'
+            },
+            children: [{
+              label: '用户管理',
+              children: [],
+              name: 'first'
+            }, {
+              children: [{
+                __config__: {
+                  label: '密码',
+                  showLabel: true,
+                  labelWidth: null,
+                  changeTag: true,
+                  tag: 'el-input',
+                  tagIcon: 'password',
+                  layout: 'colFormItem',
+                  span: 24,
+                  required: true,
+                  regList: [],
+                  document: 'https://element.eleme.cn/#/zh-CN/component/input',
+                  formId: 104,
+                  renderKey: '1041678095553682'
+                },
+                __slot__: {
+                  prepend: '',
+                  append: ''
+                },
+                placeholder: '请输入密码',
+                'show-password': true,
+                style: {
+                  width: '100%'
+                },
+                clearable: true,
+                'prefix-icon': '',
+                'suffix-icon': '',
+                maxlength: null,
+                'show-word-limit': false,
+                readonly: false,
+                disabled: false,
+                __vModel__: 'field104'
+              }],
+              label: '配置管理',
+              name: 'second'
+            }],
+            type: 'card',
+            closable: false,
+            addable: false,
+            editable: false,
+            'tab-position': 'top',
+            stretch: false,
+            __vModel__: 'field102'
+          },
+          {
+            __config__: {
               layout: 'colFormItem',
               tagIcon: 'table',
               tag: 'el-collapse',

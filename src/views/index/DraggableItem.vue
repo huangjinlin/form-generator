@@ -168,12 +168,43 @@ const layouts = {
         {components.itemBtns.apply(this, arguments)}
       </el-row>
     </el-col>
+  },
+  tsElTabs(h, currentItem, index, list) {
+    const { activeItem } = this.$listeners // 事件的监听
+    const config = currentItem.__config__ // 获取config配置
+    const { children } = currentItem // 获取子节点
+    const className = this.activeId === config.formId ? 'drawing-row-item active-from-item' : 'drawing-row-item'
+    const exportPane = []
+    // 这里是循环输出el-tab-pane子节点
+    for (let i = 0; i < children.length; i++) {
+      // 这里是拿到每个pane里面存储的组件
+      const child = renderChildren.call(this, h, currentItem, index, list, children[i])
+      exportPane.push([<el-tab-pane label={children[i].label} name={children[i].name}>
+        <draggable list={children[i].children || []} animation={100} group="componentsGroup" class="drag-wrapper">
+          {child}
+          <div style="clear:both;height: 20px"></div>
+        </draggable>
+      </el-tab-pane>])
+    }
+    const data = <el-col span={config.span}>
+      <el-row gutter={config.gutter} class={className}
+              nativeOnClick={event => { activeItem(currentItem); event.stopPropagation() }}>
+        <span class="component-name">{config.componentName}</span>
+        <render key={config.renderKey} conf={currentItem} onInput={ event => {
+          this.$set(config, 'defaultValue', event)
+        }}>
+          {exportPane}
+        </render>
+        {components.itemBtns.apply(this, arguments)}
+      </el-row>
+    </el-col>
+    return data
   }
 }
 
 function renderChildren(h, currentItem, index, list, children) {
   const config = currentItem.__config__
-  if (currentItem.__config__.tag === 'el-steps') {
+  if (currentItem.__config__.tag === 'el-steps' || currentItem.__config__.tag === 'el-tabs') {
     children = children.children
   } else {
     children = config.children

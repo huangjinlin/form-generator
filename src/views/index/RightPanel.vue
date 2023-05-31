@@ -95,6 +95,18 @@
               <el-radio-button label="bottom" />
             </el-radio-group>
           </el-form-item>
+          <template v-if="activeData.__config__.tag==='el-tabs'">
+            <el-form-item label="选项卡所在位置">
+              <el-radio-group v-model="activeData['tab-position']">
+                <el-radio-button label="top" />
+                <el-radio-button label="right" />
+                <el-radio-button label="left" />
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item v-if="activeData.__config__.labelWidth!==undefined" label="标签宽度">
+              <el-input v-model.number="activeData.__config__.labelWidth" type="number" placeholder="请输入标签宽度" />
+            </el-form-item>
+          </template>
           <template v-if="activeData.__config__.tag==='ts-iframe'">
             <el-form-item label="iframe路径">
               <el-input v-model="activeData.src" placeholder="请输入iframe路径" />
