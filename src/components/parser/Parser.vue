@@ -113,6 +113,31 @@ const layouts = {
         </render>
       </el-row>
     </el-col>
+  },
+  tsSubform(h, scheme) {
+    const config = scheme.__config__
+    const data = JSON.parse(JSON.stringify(config.children))
+    data.forEach(item => {
+      item.__config__.prop = item.__vModel__
+    })
+    const tableData = data
+    let labelWidth = config.labelWidth ? `${config.labelWidth}px` : null
+    if (config.showLabel === false) labelWidth = '0'
+    return (
+    <el-col span={config.span}>
+      <el-form-item label-width={labelWidth}
+                    label={config.showLabel ? config.label : ''}>
+        <ts-sub-form
+          table-data={tableData}
+          value={config.defaultValue}
+          displayShow={scheme.displayShow}
+          addButton={scheme.addButton}
+          canEdit={scheme.canEdit}
+          deleteButton={scheme.deleteButton}
+        ></ts-sub-form>
+      </el-form-item>
+    </el-col>
+    )
   }
 }
 
@@ -238,9 +263,15 @@ export default {
     initFormData(componentList, formData) {
       if (Array.isArray(componentList)) {
         componentList.forEach(cur => {
-          const config = cur.__config__
-          if (cur.__vModel__) formData[cur.__vModel__] = config.defaultValue
-          if (config.children) this.initFormData(config.children, formData)
+          if (cur.__config__.tag === 'ts-sub-form') {
+            const config = cur.__config__
+            config.defaultValue = [{ field102: '111', field103: '222' }, { field102: '333', field103: '444' }]
+            formData[config.formId] = config.defaultValue
+          } else {
+            const config = cur.__config__
+            if (cur.__vModel__) formData[cur.__vModel__] = config.defaultValue
+            if (config.children) this.initFormData(config.children, formData)
+          }
         })
       } else {
         componentList.cardBody.forEach(cur => {

@@ -7,6 +7,7 @@ import tsLineChart from '@/components/ts-components/ts-line-chart.vue'
 import tsIframe from '@/components/ts-components/ts-iframe.vue'
 import tsSelectDataDictionary from '@/components/ts-components/ts-select-data-dictionary.vue'
 import tsUniversalSelect from '@/components/ts-components/ts-universal-select.vue'
+import tsSubForm from '@/components/ts-components/ts-sub-form/index.vue'
 
 Vue.component('tinymce', Tinymce)
 Vue.component('tsText', tsText)
@@ -14,6 +15,7 @@ Vue.component('tsLineChart', tsLineChart)
 Vue.component('tsIframe', tsIframe)
 Vue.component('tsSelectDataDictionary', tsSelectDataDictionary)
 Vue.component('tsUniversalSelect', tsUniversalSelect)
+Vue.component('tsSubForm', tsSubForm)
 Vue.prototype.$axios = axios
 
 const $previewApp = document.getElementById('previewApp')

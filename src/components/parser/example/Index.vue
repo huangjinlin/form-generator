@@ -26,6 +26,88 @@ export default {
         fields: [
           {
             __config__: {
+              layout: 'tsSubform',
+              tagIcon: 'row',
+              tag: 'ts-sub-form',
+              label: '子表单',
+              showLabel: false,
+              defaultValue: [],
+              children: [{
+                __config__: {
+                  label: '单行文本',
+                  labelWidth: null,
+                  showLabel: false,
+                  changeTag: true,
+                  tag: 'el-input',
+                  tagIcon: 'input',
+                  required: true,
+                  layout: 'colFormItem',
+                  span: 24,
+                  document: 'https://element.eleme.cn/#/zh-CN/component/input',
+                  regList: [],
+                  formId: 102,
+                  renderKey: '1021682317606588'
+                },
+                __slot__: {
+                  prepend: '',
+                  append: ''
+                },
+                placeholder: '请输入单行文本',
+                style: {
+                  width: '100%'
+                },
+                clearable: true,
+                'prefix-icon': '',
+                'suffix-icon': '',
+                maxlength: null,
+                'show-word-limit': false,
+                readonly: false,
+                disabled: false,
+                __vModel__: 'field102'
+              }, {
+                __config__: {
+                  label: '单行文本',
+                  labelWidth: null,
+                  showLabel: false,
+                  changeTag: true,
+                  tag: 'el-input',
+                  tagIcon: 'input',
+                  required: true,
+                  layout: 'colFormItem',
+                  span: 24,
+                  document: 'https://element.eleme.cn/#/zh-CN/component/input',
+                  regList: [],
+                  formId: 103,
+                  renderKey: '1031682317607800'
+                },
+                __slot__: {
+                  prepend: '',
+                  append: ''
+                },
+                placeholder: '请输入单行文本',
+                style: {
+                  width: '100%'
+                },
+                clearable: true,
+                'prefix-icon': '',
+                'suffix-icon': '',
+                maxlength: null,
+                'show-word-limit': false,
+                readonly: false,
+                disabled: false,
+                __vModel__: 'field103'
+              }],
+              span: 24,
+              formId: 101,
+              renderKey: '1011682317605669'
+            },
+            addButton: true,
+            deleteButton: true,
+            displayShow: 'transverse',
+            canEdit: true
+          },
+          {
+            __config__: {
               label: '标签页',
               tagIcon: 'table',
               showLabel: false,

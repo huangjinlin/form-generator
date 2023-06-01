@@ -137,6 +137,15 @@ const layouts = {
     let str = tagDom
     str = colWrapper(scheme, str)
     return str
+  },
+  tsSubform(scheme) {
+    const dataName = `:table-data="other.subForm${scheme.__config__.formId}"`
+    const value = `v-model="other.subForm${scheme.__config__.formId}Data"`
+    const addButton = `:addButton="other.addButton${scheme.__config__.formId}"`
+    const deleteButton = `:deleteButton="other.deleteButton${scheme.__config__.formId}"`
+    const displayShow = `:displayShow="other.displayShow${scheme.__config__.formId}"`
+    const canEdit = `:canEdit="other.canEdit${scheme.__config__.formId}"`
+    return `<ts-sub-form ${dataName} ${value} ${addButton} ${deleteButton} ${displayShow} ${canEdit}></ts-sub-form>`
   }
 }
 
@@ -423,6 +432,15 @@ const tags = {
     const tabPosition = el['tab-position'] ? `tab-position="${el['tab-position']}"` : ''
     const child = exportTabsChild(el)
     return `<${tag} ${type} ${vModel} ${closable} ${tabPosition}>${child}</${tag}>`
+  },
+  'ts-sub-form': el => {
+    const dataName = `:table-data="other.subForm${el.__config__.formId}"`
+    const value = `v-model="other.subForm${el.__config__.formId}Data"`
+    const addButton = `:addButton="other.addButton${el.__config__.formId}"`
+    const deleteButton = `:deleteButton="other.deleteButton${el.__config__.formId}"`
+    const displayShow = `:displayShow="other.displayShow${el.__config__.formId}"`
+    const canEdit = `:canEdit="other.canEdit${el.__config__.formId}"`
+    return `<ts-sub-form ${dataName} ${value} ${addButton} ${deleteButton} ${displayShow} ${canEdit}></ts-sub-form>`
   }
 }
 function exportTabsChild(scheme) {

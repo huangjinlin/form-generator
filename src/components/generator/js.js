@@ -27,9 +27,10 @@ export function makeUpJs(formConfig, type) {
   const methodList = mixinMethod(type)
   const uploadVarList = []
   const created = []
+  const other = []
 
   formConfig.fields.forEach(el => {
-    buildAttributes(el, dataList, ruleList, optionsList, methodList, propsList, uploadVarList, created, formConfig)
+    buildAttributes(el, dataList, ruleList, optionsList, methodList, propsList, uploadVarList, created, formConfig, other)
   })
 
   const script = buildexport(
@@ -41,17 +42,18 @@ export function makeUpJs(formConfig, type) {
     uploadVarList.join('\n'),
     propsList.join('\n'),
     methodList.join('\n'),
-    created.join('\n')
+    created.join('\n'),
+    other.join('\n')
   )
   confGlobal = null
   return script
 }
 
 // 构建组件属性
-function buildAttributes(scheme, dataList, ruleList, optionsList, methodList, propsList, uploadVarList, created, formConfig) {
+function buildAttributes(scheme, dataList, ruleList, optionsList, methodList, propsList, uploadVarList, created, formConfig, other) {
   const config = scheme.__config__
   const slot = scheme.__slot__
-  buildData(scheme, dataList)
+  buildData(scheme, dataList, other)
   buildRules(scheme, ruleList)
 
   // 特殊处理options属性
@@ -169,8 +171,27 @@ function mixinMethod(type) {
 }
 
 // 构建data
-function buildData(scheme, dataList) {
+function buildData(scheme, dataList, other) {
   const config = scheme.__config__
+  if (config.tag === 'ts-sub-form') {
+    const subformData = []
+    if (scheme.__config__.children.length > 0) {
+      scheme.__config__.children.forEach(item => {
+        const basicsData = JSON.parse(JSON.stringify(item))
+        basicsData.__config__.prop = item.__vModel__
+        basicsData.disabled = item.disabled
+        basicsData.readonly = item.readonly
+        subformData.push(basicsData)
+      })
+    }
+    other.push(`subForm${config.formId}: ${JSON.stringify(subformData)},`)
+    other.push(`subForm${config.formId}Data: ${JSON.stringify(config.defaultValue)},`)
+    other.push(`addButton${config.formId}: ${JSON.stringify(scheme.addButton)},`)
+    other.push(`canEdit${config.formId}: ${JSON.stringify(scheme.canEdit)},`)
+    other.push(`deleteButton${config.formId}: ${JSON.stringify(scheme.deleteButton)},`)
+    other.push(`displayShow${config.formId}: ${JSON.stringify(scheme.displayShow)},`)
+    return
+  }
   if (scheme.__vModel__ === undefined) return
   if (config.tag === 'el-steps') {
     dataList.push(`steps_${config.formId}: ${scheme.active},`)
@@ -299,13 +320,16 @@ function buildOptionMethod(methodName, model, methodList, scheme) {
 }
 
 // js整体拼接
-function buildexport(conf, type, data, rules, selectOptions, uploadVar, props, methods, created) {
+function buildexport(conf, type, data, rules, selectOptions, uploadVar, props, methods, created, other) {
   const str = `${exportDefault}{
   ${inheritAttrs[type]}
   components: {},
   props: [],
   data () {
     return {
+      ${conf.other}: {
+        ${other}
+      },
       ${conf.formModel}: {
         ${data}
       },

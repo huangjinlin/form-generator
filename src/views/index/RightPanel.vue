@@ -22,6 +22,7 @@
       </el-dialog>
       <el-scrollbar class="right-scrollbar">
         <!-- 组件属性 -->
+        <ts-sub-form :active-data="activeData" />
         <el-form v-show="currentTab==='field' && showField" size="small" label-width="90px">
           <el-form-item v-if="activeData.on" label="自定义事件">
             <el-button @click="openCodeVisible()">
@@ -815,6 +816,7 @@ import IconsDialog from './IconsDialog'
 import {
   inputComponents, selectComponents, layoutComponents
 } from '@/components/generator/config'
+import TsSubForm from './panelProperties/ts-sub-form.vue'
 import { saveFormConf } from '@/utils/db'
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js'
 
@@ -835,7 +837,8 @@ const needRerenderList = ['tinymce']
 export default {
   components: {
     TreeNodeDialog,
-    IconsDialog
+    IconsDialog,
+    TsSubForm
   },
   props: ['showField', 'activeData', 'formConf'],
   data() {

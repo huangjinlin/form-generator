@@ -2,6 +2,7 @@
 export const formConf = {
   formRef: 'elForm',
   formModel: 'formData',
+  other: 'other',
   size: 'medium',
   labelPosition: 'right',
   labelWidth: 100,
@@ -973,6 +974,21 @@ export const layoutComponents = [
     label: 'name',
     field: 'desc',
     requestType: 'get'
+  },
+  {
+    __config__: {
+      layout: 'tsSubform', // 拖拽处理方法
+      tagIcon: 'row',
+      tag: 'ts-sub-form', // 组件名称
+      label: '子表单',
+      showLabel: false,
+      defaultValue: [], // v-model
+      children: [] // 子节点
+    },
+    addButton: true, // 默认可添加
+    deleteButton: true, // 默认可删除
+    displayShow: 'transverse',
+    canEdit: true // 默认可编辑，为false时添加和删除都不可用，并且表单为disabled状态
   }
 ]
 
