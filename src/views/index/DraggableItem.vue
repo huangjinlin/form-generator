@@ -24,6 +24,7 @@ const layouts = {
     const { activeItem } = this.$listeners
     const config = currentItem.__config__
     const child = renderChildren.apply(this, arguments)
+    console.log('child', child)
     let className = this.activeId === config.formId ? 'drawing-item active-from-item' : 'drawing-item'
     if (this.formConf.unFocusedComponentBorder) className += ' unfocus-bordered'
     let labelWidth = config.labelWidth ? `${config.labelWidth}px` : null

@@ -1,5 +1,5 @@
 const tsComponentChild = {}
-const tsSlotsFiles = require.context('../render/slots', false, /\.js$/)
+const tsSlotsFiles = require.context('../../render/slots', false, /\.js$/)
 const tsKeys = tsSlotsFiles.keys() || []
 tsKeys.forEach(key => {
   const tsTag = key.replace(/^\.\/(.*)\.\w+$/, '$1')

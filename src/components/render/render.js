@@ -29,6 +29,9 @@ function vModel(dataObject, defaultValue) {
 
 function mountSlotFiles(h, confClone, children) {
   const childObjs = componentChild[confClone.__config__.tag]
+  console.log('componentChild', componentChild)
+  console.log('tag', confClone.__config__.tag)
+  console.log('childObjs', childObjs)
   if (childObjs) {
     Object.keys(childObjs).forEach(key => {
       const childFunc = childObjs[key]
@@ -37,6 +40,7 @@ function mountSlotFiles(h, confClone, children) {
       }
     })
   }
+  console.log('children', children)
 }
 
 function emitEvents(confClone) {
