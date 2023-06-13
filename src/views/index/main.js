@@ -12,8 +12,6 @@ import tsSelectDataDictionary from '@/components/ts-components/ts-select-data-di
 import tsUniversalSelect from '@/components/ts-components/ts-universal-select.vue'
 import tsSubForm from '@/components/ts-components/ts-sub-form/index.vue'
 
-import store from '@/store'
-
 Vue.component('tinymce', Tinymce)
 Vue.component('tsText', tsText)
 Vue.component('tsLineChart', tsLineChart)
@@ -26,7 +24,6 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 
 new Vue({
-  store,
   router,
   render: h => h(App)
 }).$mount('#app')

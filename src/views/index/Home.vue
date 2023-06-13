@@ -44,16 +44,6 @@
 
     <div class="center-board">
       <div class="action-bar">
-        <el-tooltip class="item" effect="dark" content="撤销" placement="bottom">
-          <el-button :disabled="!isRevoke" type="text" @click="revoke">
-            <svg-icon icon-class="revoke" style="font-size:20px;color: #409EFF" />
-          </el-button>
-        </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="重做" placement="bottom">
-          <el-button :disabled="!isRedo" type="text" @click="redo">
-            <svg-icon icon-class="redo" style="font-size:20px;color: #409EFF" />
-          </el-button>
-        </el-tooltip>
         <el-button icon="el-icon-video-play" type="text" @click="run">
           运行
         </el-button>
@@ -158,7 +148,6 @@ import {
   getDrawingList, saveDrawingList, getIdGlobal, saveIdGlobal, getFormConf
 } from '@/utils/db'
 import loadBeautifier from '@/utils/loadBeautifier'
-import { EventBus } from '@/utils/event-bus'
 
 let beautifier
 const emptyActiveData = { style: {}, autosize: {} }
@@ -216,9 +205,7 @@ export default {
           title: 'ECharts组件',
           list: EChartsComponents
         }
-      ],
-      isRevoke: false,
-      isRedo: false
+      ]
     }
   },
   computed: {
@@ -244,9 +231,6 @@ export default {
     drawingList: {
       handler(val, olVal) {
         this.saveDrawingListDebounce(val)
-        if (val.length === olVal.length && JSON.stringify(val).length === JSON.stringify(olVal).length) {
-          EventBus.$emit('on-history-add')
-        }
         if (val.length === 0) this.idGlobal = 100
       },
       deep: true
@@ -259,57 +243,12 @@ export default {
     }
   },
   created() {
-    const self = this
-    // eslint-disable-next-line func-names
-    document.onkeydown = function (e) {
-      if (e.key === 'Control') {
-        self.ts_key_code_one = 'Control'
-      }
-      if (e.key === 'z') {
-        self.ts_key_code_two = 'z'
-      }
-      if (e.key === 'y') {
-        self.ts_key_code_two = 'y'
-      }
-      if (self.ts_key_code_one === 'Control' && self.ts_key_code_two === 'z' && self.isRevoke) {
-        self.revoke()
-      }
-      if (self.ts_key_code_one === 'Control' && self.ts_key_code_two === 'y' && self.isRedo) {
-        self.redo()
-      }
-    }
-    // eslint-disable-next-line func-names
-    document.onkeyup = function (e) {
-      if (e.key === 'Control') {
-        self.ts_key_code_one = ''
-      }
-      if (e.key === 'z' || e.key === 'y') {
-        self.ts_key_code_two = ''
-      }
-    }
   },
   mounted() {
-    const _this = this
-    this.$store.dispatch('history/clear').then(() => {
-      EventBus.$on('on-history-add', () => {
-        _this.$store.dispatch('history/add', { data: this.drawingList }).then(() => {
-          _this.isRevoke = true
-          _this.isRedo = false
-        })
-      })
-    })
     if (Array.isArray(drawingListInDB) && drawingListInDB.length > 0) {
       this.drawingList = drawingListInDB
-      _this.$store.dispatch('history/add', { data: this.drawingList }).then(() => {
-        _this.isRevoke = true
-        _this.isRedo = false
-      })
     } else {
       this.drawingList = drawingDefalut
-      _this.$store.dispatch('history/add', { data: this.drawingList }).then(() => {
-        _this.isRevoke = true
-        _this.isRedo = false
-      })
     }
     this.activeFormItem(this.drawingList[0])
     if (formConfInDB) {
@@ -527,20 +466,6 @@ export default {
       this.drawingList = deepClone(data.fields)
       delete data.fields
       this.formConf = data
-    },
-    revoke() {
-      this.$store.dispatch('history/revoke').then(ts => {
-        this.drawingList = ts.data
-        this.isRevoke = ts.undo
-        this.isRedo = ts.redo
-      })
-    },
-    redo() {
-      this.$store.dispatch('history/redo').then(ts => {
-        this.drawingList = ts.data
-        this.isRevoke = ts.undo
-        this.isRedo = ts.redo
-      })
     }
   }
 }
